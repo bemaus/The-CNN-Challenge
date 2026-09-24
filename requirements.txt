@@ -1,1 +1,12 @@
 
+torch==2.14.0
+torchvision==0.29.0         
+numpy==2.5.3
+pandas==3.0.2                
+scikit-learn==1.8.0          
+matplotlib==3.11.1
+pillow==12.2.0
+tqdm==4.67.3
+certifi==2026.2.25
+ipykernel==7.2.0
+nbconvert==7.17.1
