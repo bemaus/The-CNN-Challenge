@@ -18,7 +18,7 @@ class TNet(nn.Module):
     def forward(self, x):
         x = self.features(x)
         return self.classifier(x)
-    
+
 
 class EfficientNet(nn.Module):
     def __init__(self, num_classes = 16, dropout=0.3, pretrained=True):
@@ -42,9 +42,7 @@ class EfficientNet(nn.Module):
         return self.classifier(x)
     
 
-
 def build_model(cfg, num_classes):
-    """Instantiate the model described by the `model:` section of the config."""
     m = cfg["model"]
     name = m["name"]
     if name == "simple_cnn":
@@ -62,9 +60,8 @@ def build_model(cfg, num_classes):
 
 
 if __name__ == "__main__":
-    # Quick shape sanity check: python simple_CNN.py
-    model = SimpleCNN(num_classes=16)
+    model = TNet(num_classes=16)
     out = model(torch.randn(4, 3, 224, 224))
     print(model)
-    print("Output shape:", tuple(out.shape))  # expect (4, 16)
+    print("Output shape:", tuple(out.shape))
     print(f"Trainable parameters: {sum(p.numel() for p in model.parameters() if p.requires_grad):,}")
