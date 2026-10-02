@@ -18,7 +18,7 @@ data:
     random_grayscale_p: 0.2
     random_erasing_p: 0.25
     cutmix_alpha: 1.0
-    cutmix_prob: 0.5
+    cutmix_prob: 0.3
 
 model:
   name: efficientnet_b0
@@ -34,9 +34,9 @@ scheduler:
   warmup_epochs: 1
 
 training:
-  num_epochs: 20
+  num_epochs: 30
   label_smoothing: 0.1
   patience: 6
 
 output:
-  checkpoint: ../Models/best_efficientnet_b0_scenes.pt
+  checkpoint: ../Models/efficientnet_b0_best.pt

@@ -1,21 +1,17 @@
 from pathlib import Path
 from glob import glob
 import random
-import time
-import copy
 
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from PIL import Image
-from tqdm import tqdm
 
 import torch
 import torch.nn as nn
-import torch.optim as optim
-from torch.utils.data import DataLoader, Subset
+from torch.utils.data import DataLoader
 import torchvision
-from torchvision import datasets, transforms, models
+from torchvision import datasets
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix, classification_report
 
@@ -25,11 +21,8 @@ from train import (parse_args, load_config, build_loaders, build_transforms,
 
 def find_root():
     try:
-        from google.colab import drive
-        drive.mount('/content/gdrive')
-        PROJECT_ROOT = Path('/content/gdrive/MyDrive/CNN_Data')
+        PROJECT_ROOT = Path('.')
     except ImportError:
-        print('Not running in Google Colab; Drive mount skipped.')
         PROJECT_ROOT = Path(__file__).resolve().parent.parent
     return PROJECT_ROOT
 
@@ -38,7 +31,7 @@ def load_data(PROJECT_ROOT):
     TRAIN_ROOT = DATA_ROOT / 'train'
     TEST_ROOT = DATA_ROOT / 'test'
     TEST2_ROOT = DATA_ROOT / 'test2'   
-    CHECKPOINT_PATH = PROJECT_ROOT / 'best_efficientnet_b0_scenes.pt'
+    CHECKPOINT_PATH = PROJECT_ROOT / 'Models' / 'output.pt'
     SEED = 0
 
     def set_random_seed(seed=SEED):
@@ -169,7 +162,7 @@ def visualize_predictions(original_image, probabilities, class_names, true_label
     plt.show()
 
 
-def sample_predictions(model, test_loader, class_names, device, num_samples=5,
+def sample_predictions(model, class_names, device, num_samples=5,
                        TEST_ROOT=None, eval_transform=None, SEED=0):
     test_images = sorted(glob(str(TEST_ROOT / '*' / '*.jpg')))
     rng = np.random.default_rng(SEED)
@@ -191,7 +184,7 @@ def main():
     PROJECT_ROOT = find_root()
     TRAIN_ROOT, TEST_ROOT, TEST2_ROOT, CHECKPOINT_PATH, SEED, device = load_data(PROJECT_ROOT)
     cfg["data"]["train_root"] = str(TRAIN_ROOT)
-    cfg["output"]["checkpoint"] = str(CHECKPOINT_PATH)
+    CHECKPOINT_PATH = CHECKPOINT_PATH.parent / Path(cfg["output"]["checkpoint"]).name
 
     d = cfg["data"]
     train_loader, val_loader, class_names = build_loaders(cfg)
@@ -223,7 +216,7 @@ def main():
     learning_curve(history)
     confucion_matrix_report(model, val_loader, class_names, device, num_classes)
     final_evaluation(model, test_loader, device, class_names)
-    sample_predictions(model, test_loader, class_names, device, num_samples=5,
+    sample_predictions(model, class_names, device, num_samples=5,
                        TEST_ROOT=TEST_ROOT, eval_transform=eval_transform, SEED=SEED)
 
 
