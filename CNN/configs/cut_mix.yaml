@@ -39,4 +39,4 @@ training:
   patience: 6
 
 output:
-  checkpoint: ../Models/efficientnet_b0_best.pt
+  checkpoint: ../Models/efficientnet_b0_cutmix.pt

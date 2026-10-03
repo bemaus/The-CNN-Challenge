@@ -16,9 +16,9 @@ data:
     rotation_degrees: 10
     color_jitter: [0.3, 0.3, 0.2]
     random_grayscale_p: 0.2
-    random_erasing_p: 0.30
-    cutmix_alpha: 0.0
-    cutmix_prob: 0.0
+    random_erasing_p: 0.25
+    cutmix_alpha: 1.0
+    cutmix_prob: 0.3
 
 model:
   name: efficientnet_b0

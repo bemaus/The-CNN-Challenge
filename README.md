@@ -48,6 +48,5 @@ The file excacutes commands to provide the user image samples, graphs, and final
 These results will be sent through a pop-up window and the program will pause until the window is closed.
 To finish the program, simply close all pop-up windows.
 
-## Testing Models
-
-Use test.ipynb to see every models accuracy.
+## Final Results Can Be Found at the Bottom of ITCS_6169_8169_Assignment1_2026_Starter.ipynb
+Run test.ipynb in CNN to see every model tested.
